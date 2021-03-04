@@ -21,7 +21,7 @@ let coutdownTimeout: NodeJS.Timeout
 export function CoutdownProvider({ children }: CoutdownProviderProps) {
   const { startNewChallenge } = useContext(ChallengesContext)
 
-  const [time, setTime] = useState(0.05 * 60)
+  const [time, setTime] = useState(25 * 60)
   const [isActive, setIsActive] = useState(false)
   const [hasFinished, setHasFinished] = useState(false)
 
@@ -35,7 +35,7 @@ export function CoutdownProvider({ children }: CoutdownProviderProps) {
   function resetCoutdown() {
     clearTimeout(coutdownTimeout)
     setIsActive(false)
-    setTime(0.05 * 60)
+    setTime(25 * 60)
     setHasFinished(false)
   }
 
