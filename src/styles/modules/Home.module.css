@@ -1,0 +1,74 @@
+.homeContainer {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to top, var(--blue), var(--blue-dark));
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--white);
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+
+  margin-right: 200px;
+}
+
+.rightContainer h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  padding-top: 8rem;
+}
+
+.githubBox {
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.githubBox p {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  max-width: 300px;
+  margin-left: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+}
+
+.inputGroup input {
+  flex: 1;
+
+  background: linear-gradient(to right, var(--blue-dark), var(--blue));
+  border-radius: 5px 0 0 5px;
+  padding: 1rem 1.5rem;
+  color: var(--white);
+  outline: none;
+  height: 4rem;
+  border: 0;
+}
+
+.inputGroup input::placeholder {
+  color: var(--white);
+}
+
+.inputGroup button {
+  background: var(--blue-dark);
+  border-radius: 0 5px 5px 0;
+  font-size: 0px;
+  outline: none;
+  height: 4rem;
+  width: 4rem;
+  border: 0;
+
+  transition: background-color 0.2s;
+}
+
+.inputGroup button:hover {
+  background: var(--green);
+}
