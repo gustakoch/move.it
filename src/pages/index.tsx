@@ -1,16 +1,9 @@
-import Head from 'next/head'
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
+import { signIn, signOut, useSession } from 'next-auth/client'
 
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-
-import { CompletedChallenges } from "../components/CompletedChallenges";
-import { CoutdownProvider } from '../contexts/CoutdownContext';
-import { ExperienceBar } from "../components/ExperienceBar";
-import { ChallengeBox } from '../components/ChallengeBox';
-import { Countdown } from "../components/Countdown";
-import { Profile } from '../components/Profile';
-
-import styles from '../styles/pages/Home.module.css'
+import { Login } from '../components/Login'
+import Main from '../components/Main'
 
 interface HomeProps {
   level: number,
@@ -18,34 +11,21 @@ interface HomeProps {
   challengesCompleted: number
 }
 
-export default function Home(props: HomeProps) {
+export default function Index({ level, challengesCompleted, currentExperience }: HomeProps) {
+  const [session, loading] = useSession()
+
   return (
-    <ChallengesProvider
-      level={props.level}
-      currentExperience={props.currentExperience}
-      challengesCompleted={props.challengesCompleted}
-    >
-      <div className={styles.container}>
-        <Head>
-          <title>Home | move.it</title>
-        </Head>
-
-        <ExperienceBar />
-
-        <CoutdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CoutdownProvider>
-      </div>
-    </ChallengesProvider>
+    <>
+      {!session ? (
+        <Login />
+      ): (
+        <Main
+          level={level}
+          challengesCompleted={challengesCompleted}
+          currentExperience={currentExperience}
+        />
+      )}
+    </>
   )
 }
 

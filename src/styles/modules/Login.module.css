@@ -33,42 +33,27 @@
   font-size: 1.25rem;
   line-height: 1.75rem;
   max-width: 300px;
-  margin-left: 1rem;
 }
 
-.inputGroup {
-  display: flex;
-  align-items: center;
-}
-
-.inputGroup input {
+.rightContainer button {
   flex: 1;
 
-  background: linear-gradient(to right, var(--blue-dark), var(--blue));
-  border-radius: 5px 0 0 5px;
-  padding: 1rem 1.5rem;
-  color: var(--white);
-  outline: none;
-  height: 4rem;
-  border: 0;
-}
-
-.inputGroup input::placeholder {
-  color: var(--white);
-}
-
-.inputGroup button {
   background: var(--blue-dark);
-  border-radius: 0 5px 5px 0;
-  font-size: 0px;
-  outline: none;
-  height: 4rem;
-  width: 4rem;
+  border-radius: 5px;
+  outline: var(--blue);
   border: 0;
+  color: var(--white);
+  height: 4rem;
+  line-height: 4rem;
+  font-size: 1.25rem;
 
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  transition: filter 0.2s;
 }
 
-.inputGroup button:hover {
-  background: var(--green);
+.rightContainer button:hover {
+  filter: brightness(0.9);
 }
