@@ -1,5 +1,4 @@
 import { signOut } from 'next-auth/client'
-import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
@@ -12,13 +11,15 @@ import { Profile } from './Profile';
 
 import styles from '../styles/modules/Main.module.css'
 
-interface HomeProps {
+interface MainProps {
   level: number,
   currentExperience: number,
-  challengesCompleted: number
+  challengesCompleted: number,
+  name: string,
+  avatarUrl: string
 }
 
-export default function Main(props: HomeProps) {
+export default function Main(props: MainProps) {
   return (
     <ChallengesProvider
       level={props.level}
@@ -35,7 +36,10 @@ export default function Main(props: HomeProps) {
         <CoutdownProvider>
           <section>
             <div>
-              <Profile />
+              <Profile
+                name={props.name}
+                avatarUrl={props.avatarUrl}
+              />
               <CompletedChallenges />
               <Countdown />
             </div>

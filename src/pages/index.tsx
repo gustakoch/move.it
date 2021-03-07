@@ -5,14 +5,16 @@ import { signIn, signOut, useSession } from 'next-auth/client'
 import { Login } from '../components/Login'
 import Main from '../components/Main'
 
-interface HomeProps {
+interface IndexProps {
   level: number,
   currentExperience: number,
   challengesCompleted: number
 }
 
-export default function Index({ level, challengesCompleted, currentExperience }: HomeProps) {
+export default function Index({ level, challengesCompleted, currentExperience }: IndexProps) {
   const [session, loading] = useSession()
+
+  console.log(session)
 
   return (
     <>
@@ -23,6 +25,8 @@ export default function Index({ level, challengesCompleted, currentExperience }:
           level={level}
           challengesCompleted={challengesCompleted}
           currentExperience={currentExperience}
+          name={session.user.name}
+          avatarUrl={session.user.image}
         />
       )}
     </>
