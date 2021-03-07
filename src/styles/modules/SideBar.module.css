@@ -1,0 +1,57 @@
+.sideBarContainer {
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: linear-gradient(to bottom, var(--white), var(--background));
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 7rem;
+}
+
+.sideBarContainer > img {
+  position: absolute;
+  top: 1.5rem;
+}
+
+.sideBarContainer button {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 0.5rem;
+  margin: 1rem 0;
+
+  position: relative;
+  border: 0;
+  background: transparent;
+  outline: 0;
+}
+
+.sideBarContainer button.active span {
+  background-color: var(--blue);
+
+  width: 3px;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  border-radius: 0 1rem 1rem 0;
+  transition: all 0.3s;
+}
+
+.sideBarContainer button.active svg path {
+  stroke: var(--blue);
+  transition: all 0.3s;
+}
+

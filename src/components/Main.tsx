@@ -2,8 +2,9 @@ import { signOut } from 'next-auth/client'
 import Head from 'next/head'
 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CompletedChallenges } from "./CompletedChallenges";
 import { CoutdownProvider } from '../contexts/CoutdownContext';
+
+import { CompletedChallenges } from "./CompletedChallenges";
 import { ExperienceBar } from "./ExperienceBar";
 import { ChallengeBox } from './ChallengeBox';
 import { Countdown } from "./Countdown";
@@ -45,7 +46,6 @@ export default function Main(props: MainProps) {
             </div>
             <div>
               <ChallengeBox />
-              <button onClick={() => signOut()}>Sair</button>
             </div>
           </section>
         </CoutdownProvider>

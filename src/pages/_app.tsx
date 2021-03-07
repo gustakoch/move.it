@@ -1,9 +1,13 @@
 
+import { SideBarProvider } from '../contexts/SideBarContext'
+
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Component {...pageProps} />
+    <SideBarProvider>
+      <Component {...pageProps} />
+    </SideBarProvider>
   )
 }
 

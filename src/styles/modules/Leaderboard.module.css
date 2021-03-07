@@ -1,0 +1,117 @@
+.leaderboardContainer {
+  height: 100vh;
+  max-width: 992px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.leaderboardSubstitles {
+  display: flex;
+
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text);
+
+  margin: 4rem 0 1.5rem 0;
+}
+
+.leaderboardSubstitles .user {
+  margin-left: 2.25rem;
+}
+
+.leaderboardSubstitles .challenges {
+  margin-left: 23.1rem;
+}
+
+.leaderboardSubstitles .xp {
+  margin-left: 9.9rem;
+}
+
+.userRow + .userRow {
+  margin-top: 0.5rem;
+}
+
+.userRow {
+  display: flex;
+
+  height: 7rem;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+
+  border-radius: 5px 0 0 5px;
+}
+
+.userRow > span {
+  background: var(--white);
+  width: 5.25rem;
+  margin-right: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.userBox {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: var(--white);
+  padding: 0 1rem;
+
+  border-radius: 0 5px 5px 0;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+
+  width: 55%;
+}
+
+.userInfo > img {
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+}
+
+.userInfo > div {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 1rem;
+}
+
+.userInfo > div strong {
+  font-size: 1.25rem;
+}
+
+.userInfo > div p {
+  margin-top: 0.5rem;
+}
+
+.userInfo > div p img {
+  margin-right: 0.5rem;
+}
+
+.boxChallengesXp {
+  flex: 1;
+
+  display: flex;
+}
+
+.userChallengesCompleted {
+  margin-right: 5rem;
+}
+
+.userChallengesCompleted > span:first-child,
+.userXp > span:first-child {
+  color: var(--blue-dark);
+}

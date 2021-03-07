@@ -1,9 +1,13 @@
 import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { useContext } from 'react'
+import { useSession } from 'next-auth/client'
 
+import { Leaderboard } from '../components/Leaderboard'
+import { SideBar } from '../components/SideBar'
 import { Login } from '../components/Login'
 import Main from '../components/Main'
+
+import { SideBarContext, SideBarProvider } from '../contexts/SideBarContext'
 
 interface IndexProps {
   level: number,
@@ -12,22 +16,29 @@ interface IndexProps {
 }
 
 export default function Index({ level, challengesCompleted, currentExperience }: IndexProps) {
-  const [session, loading] = useSession()
-
-  console.log(session)
+  const { home, leaderboard } = useContext(SideBarContext)
+  const [session] = useSession()
 
   return (
     <>
       {!session ? (
         <Login />
       ): (
-        <Main
-          level={level}
-          challengesCompleted={challengesCompleted}
-          currentExperience={currentExperience}
-          name={session.user.name}
-          avatarUrl={session.user.image}
-        />
+        <>
+          <SideBar />
+
+          {home && !leaderboard ? (
+            <Main
+              level={level}
+              challengesCompleted={challengesCompleted}
+              currentExperience={currentExperience}
+              name={session.user.name}
+              avatarUrl={session.user.image}
+            />
+          ) : (
+            <Leaderboard />
+          )}
+        </>
       )}
     </>
   )
