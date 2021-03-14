@@ -1,14 +1,12 @@
 import { createContext, useState, ReactNode, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import axios from 'axios'
 
 import { LevelUpModal } from '../components/LevelUpModal'
 import challenges from '../../challenges.json'
 
 interface ChallengesProviderProps {
-  children: ReactNode,
-  level: number,
-  currentExperience: number,
-  challengesCompleted: number
+  children: ReactNode
 }
 
 interface Challenge {
@@ -19,12 +17,14 @@ interface Challenge {
 
 interface ChallengesContextDate {
   level: number,
+  name: string,
+  avatar: string,
   currentExperience: number,
   experienceToNextLevel: number,
   challengesCompleted: number,
-  activeChallenge: Challenge
+  activeChallenge: Challenge,
+  loadingData: boolean,
   startNewChallenge: () => void
-  levelUp: () => void,
   resetChallenge: () => void,
   completeChallenge: () => void,
   closeLevelUpModal: () => void
@@ -32,10 +32,14 @@ interface ChallengesContextDate {
 
 export const ChallengesContext = createContext({} as ChallengesContextDate)
 
-export function ChallengesProvider({ children, ...otherProps }: ChallengesProviderProps) {
-  const [level, setLevel] = useState(otherProps.level ?? 1)
-  const [currentExperience, setCurrentExperience] = useState(otherProps.currentExperience ?? 0)
-  const [challengesCompleted, setChallengesCompleted] = useState(otherProps.challengesCompleted ?? 0)
+export function ChallengesProvider({ children }: ChallengesProviderProps) {
+  const [level, setLevel] = useState(1)
+  const [name, setName] = useState('')
+  const [avatar, setAvatar] = useState('')
+  const [currentExperience, setCurrentExperience] = useState(0)
+  const [challengesCompleted, setChallengesCompleted] = useState(0)
+
+  const [loadingData, setLoadingData] = useState(true)
   const [activeChallenge, setActiveChallenge] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -43,18 +47,44 @@ export function ChallengesProvider({ children, ...otherProps }: ChallengesProvid
 
   useEffect(() => {
     Notification.requestPermission()
+
+    async function verifyLoggedUser() {
+      const response = await axios.get('/api/user/verify')
+      const {
+        challengesCompleted,
+        currentExperience,
+        picture,
+        level,
+        name
+      } = response.data
+
+      setChallengesCompleted(challengesCompleted)
+      setCurrentExperience(currentExperience)
+      setAvatar(picture)
+      setLevel(level)
+      setName(name)
+
+      setLoadingData(false)
+    }
+
+    verifyLoggedUser()
   }, [])
 
   useEffect(() => {
-    Cookies.set('level', String(level))
-    Cookies.set('currentExperience', String(currentExperience))
-    Cookies.set('challengesCompleted', String(challengesCompleted))
-  }, [level, currentExperience, challengesCompleted])
+    async function updateUserData() {
+      setLoadingData(true)
 
-  function levelUp() {
-    setLevel(level + 1)
-    setIsModalOpen(true)
-  }
+      const response = await axios.post('/api/user/update', {
+        level,
+        currentExperience,
+        challengesCompleted
+      })
+
+      setLoadingData(false)
+    }
+
+    updateUserData()
+  }, [level, currentExperience, challengesCompleted])
 
   function closeLevelUpModal() {
     setIsModalOpen(false)
@@ -79,7 +109,7 @@ export function ChallengesProvider({ children, ...otherProps }: ChallengesProvid
     setActiveChallenge(null)
   }
 
-  function completeChallenge() {
+  async function completeChallenge() {
     if (!activeChallenge) {
       return
     }
@@ -88,8 +118,9 @@ export function ChallengesProvider({ children, ...otherProps }: ChallengesProvid
     let finalExperience = currentExperience + exp
 
     if (finalExperience >= experienceToNextLevel) {
-      levelUp()
+      setLevel(level + 1)
       finalExperience = finalExperience - experienceToNextLevel
+      setIsModalOpen(true)
     }
 
     setCurrentExperience(finalExperience)
@@ -101,7 +132,8 @@ export function ChallengesProvider({ children, ...otherProps }: ChallengesProvid
     <ChallengesContext.Provider
       value={{
         level,
-        levelUp,
+        name,
+        avatar,
         currentExperience,
         challengesCompleted,
         startNewChallenge,
@@ -109,7 +141,8 @@ export function ChallengesProvider({ children, ...otherProps }: ChallengesProvid
         resetChallenge,
         experienceToNextLevel,
         completeChallenge,
-        closeLevelUpModal
+        closeLevelUpModal,
+        loadingData
       }}
     >
       {children}

@@ -1,21 +1,14 @@
 import { useContext } from 'react'
 import { ChallengesContext } from '../contexts/ChallengesContext'
-import { useSession } from 'next-auth/client'
 
 import styles from '../styles/modules/Profile.module.css'
 
-interface ProfileProps {
-  name: string,
-  avatarUrl: string
-}
-
-export function Profile({ name, avatarUrl }: ProfileProps) {
-  const { level } = useContext(ChallengesContext)
-  const [session, loading] = useSession()
+export function Profile() {
+  const { level, avatar, name } = useContext(ChallengesContext)
 
   return (
     <div className={styles.profileContainer}>
-      <img src={avatarUrl} alt="Avatar"/>
+      <img src={avatar} alt="Avatar"/>
       <div>
         <strong>{name}</strong>
         <p>
