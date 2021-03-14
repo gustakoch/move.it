@@ -20,7 +20,7 @@ export default async (request: NowRequest, response: NowResponse) => {
   const user = await collection.findOne({ email })
 
   if (user) {
-    return response.json(user)
+    return response.status(200).json(user)
   }
 
   await collection.insertOne({

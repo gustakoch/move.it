@@ -6,7 +6,7 @@ export function Leaderboard() {
   return (
     <div className={styles.leaderboardContainer}>
       <Head>
-        <title>Leaderboard | move.it</title>
+        <title>Leaderboards | move.it</title>
       </Head>
 
       <h1>Leaderboard</h1>
