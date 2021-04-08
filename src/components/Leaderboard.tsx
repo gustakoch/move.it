@@ -1,15 +1,29 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import axios from 'axios'
 
 import styles from '../styles/modules/Leaderboard.module.css'
 
 export function Leaderboard() {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    async function getAllUsers() {
+      const response = await axios.get('/api/user/all')
+
+      setUsers(response.data)
+    }
+
+    getAllUsers()
+  }, [])
+
   return (
     <div className={styles.leaderboardContainer}>
       <Head>
         <title>Leaderboards | move.it</title>
       </Head>
 
-      <h1>Leaderboard</h1>
+      <h1>Leaderboards</h1>
 
       <div className={styles.leaderboardSubstitles}>
         <span className={styles.position}>Posição</span>
@@ -18,57 +32,33 @@ export function Leaderboard() {
         <span className={styles.xp}>Experiência</span>
       </div>
 
-      <div className={styles.userRow}>
-        <span>1</span>
-        <div className={styles.userBox}>
-          <div className={styles.userInfo}>
-            <img src="https://avatars.githubusercontent.com/u/2254731?v=4" alt="Avatar"/>
-            <div>
-              <strong>Diego Fernandes</strong>
-              <p>
-                <img src="icons/level.svg" alt="Level Up"/>
-                Level 16
-              </p>
+      {users.map(user => (
+        <div className={styles.userRow}>
+          <span>1</span>
+          <div className={styles.userBox}>
+            <div className={styles.userInfo}>
+              <img src={user.picture} alt="Avatar"/>
+              <div>
+                <strong>{user.name}</strong>
+                <p>
+                  <img src="icons/level.svg" alt="Level Up"/>
+                  Level {user.level}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className={styles.boxChallengesXp}>
-            <div className={styles.userChallengesCompleted}>
-              <span>127454</span>
-              <span> completados</span>
-            </div>
-            <div className={styles.userXp}>
-              <span>1246000</span>
-              <span> xp</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.userRow}>
-        <span>2</span>
-        <div className={styles.userBox}>
-          <div className={styles.userInfo}>
-            <img src="https://avatars.githubusercontent.com/u/2254731?v=4" alt="Avatar"/>
-            <div>
-              <strong>Diego Fernandes</strong>
-              <p>
-                <img src="icons/level.svg" alt="Level Up"/>
-                Level 16
-              </p>
-            </div>
-          </div>
-          <div className={styles.boxChallengesXp}>
-            <div className={styles.userChallengesCompleted}>
-              <span>127454</span>
-              <span> completados</span>
-            </div>
-            <div className={styles.userXp}>
-              <span>1246000</span>
-              <span> xp</span>
+            <div className={styles.boxChallengesXp}>
+              <div className={styles.userChallengesCompleted}>
+                <span>{user.challengesCompleted}</span>
+                <span> completados</span>
+              </div>
+              <div className={styles.userXp}>
+                <span>{user.currentExperience}</span>
+                <span> xp</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   )
 }

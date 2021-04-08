@@ -12,6 +12,14 @@ interface GitHubTokenProps {
 
 export default async (request: NowRequest, response: NowResponse) => {
   const { 'next-auth.session-token': authToken } = request.cookies
+
+  if (!authToken) {
+    return response.status(401).json({
+      error: true,
+      message: 'Não foi encontrado nenhum token de autenticação'
+    })
+  }
+
   const { name, email, picture, sub: githubId } = jwtDecode<GitHubTokenProps>(authToken)
 
   const database = await connectDatabase(process.env.MONGODB_URI)
